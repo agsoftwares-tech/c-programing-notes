@@ -36,43 +36,69 @@ If the question asks for **declaration and initialization**, write both syntax a
           type: "text",
           content: `## Definition of Array
 
-An **array** is a collection of elements of the **same data type** stored in **contiguous memory locations**. Each element is identified by an **index**.
+An **array** is a collection of elements of the **same data type** stored in **contiguous (adjacent) memory locations**. Each element is identified by an **index** (subscript) starting from **0**.
+
+**Formal Definition:** An array is a derived data type in C that allows storing multiple values of the same type under a single variable name.
 
 ### Declaration Syntax
-\`data_type array_name[size];\`
+\`data_type  array_name[size];\`
+
+| Part | Meaning |
+|---|---|
+| \`data_type\` | Type of all elements (int, float, char, …) |
+| \`array_name\` | Name given to the array |
+| \`size\` | Maximum number of elements the array can hold |
 
 ### Examples of Declaration
-- \`int marks[5];\`
-- \`float price[10];\`
-- \`char city[20];\`
+\`\`\`c
+int   marks[5];      /* array of 5 integers  */
+float price[10];     /* array of 10 floats   */
+char  city[20];      /* array of 20 chars    */
+\`\`\`
+
+---
 
 ## Ways to Initialize an Array
 
-### 1. Full Initialization
-All elements are supplied when the array is declared.
+### 1. Full Initialization at Declaration Time
+All elements are provided in curly braces at the time of declaration.
+\`int a[5] = {10, 20, 30, 40, 50};\`
+Memory layout: a[0]=10, a[1]=20, a[2]=30, a[3]=40, a[4]=50
 
 ### 2. Initialization Without Mentioning Size
-The compiler automatically counts the number of elements.
+The compiler **automatically counts** the number of elements in the initializer list and sets the array size accordingly.
+\`int b[] = {1, 2, 3, 4};\`  → compiler creates b[4]
 
 ### 3. Partial Initialization
-If fewer values are supplied, the remaining elements are initialized to **0**.
+If fewer values are supplied than the declared size, the remaining positions are automatically initialized to **0**.
+\`int c[5] = {7, 8};\`  → c[0]=7, c[1]=8, c[2]=0, c[3]=0, c[4]=0
 
-### 4. Character Array Initialization
-A string can be stored inside a character array and it ends with the null character \`'\\0'\`.
+### 4. Character Array (String) Initialization
+A string literal can be directly assigned to a character array. The compiler automatically appends the null character \`'\\0'\` at the end.
+\`char name[] = "ARRAY";\`  → stores 'A','R','R','A','Y','\\0'
+
+---
 
 ## Array Features
+
 | Feature | Explanation |
 |---|---|
-| Data type | Same type for all elements |
-| Storage | Contiguous memory |
-| Access | By index such as \`a[0]\`, \`a[1]\` |
-| Size | Fixed when declared |
-| Use | Storing marks, numbers, matrix rows, characters |
+| Data type | All elements must be of the **same** data type |
+| Storage | Elements stored in **contiguous** memory locations |
+| Access | Random access using index: \`a[0]\`, \`a[1]\`, … \`a[n-1]\` |
+| Size | Fixed at declaration time (static allocation) |
+| Index | Starts at **0** and goes up to **size − 1** |
+| Use | Storing marks, numbers, matrix rows, text characters |
 
-## Advantages
-- Easy processing using loops
-- Fast random access using index
-- Useful for lists, tables, and matrices`,
+## Advantages of Arrays
+1. **Easy traversal** — use a loop to process all elements.
+2. **Fast random access** — any element is accessed in O(1) time using its index.
+3. **Compact storage** — one variable name for many values.
+4. **Useful for matrices** — 2D arrays represent tabular data.
+
+## Disadvantages
+- Size is fixed; cannot grow or shrink at run time.
+- Inserting or deleting an element requires shifting of elements.`,
         },
         {
           type: "code",
@@ -84,10 +110,10 @@ A string can be stored inside a character array and it ends with the null charac
 void main() {
     clrscr();
 
-    int a[5] = {10, 20, 30, 40, 50};     // full initialization
-    int b[] = {1, 2, 3, 4};              // size inferred by compiler
-    int c[5] = {7, 8};                   // partial initialization
-    char name[] = "ARRAY";              // character array (string)
+    int a[5] = {10, 20, 30, 40, 50};     /* full initialization     */
+    int b[] = {1, 2, 3, 4};              /* size inferred (b[4])    */
+    int c[5] = {7, 8};                   /* partial: rest become 0  */
+    char name[] = "ARRAY";              /* character array (string) */
     int i;
 
     printf("Array a: ");
@@ -98,24 +124,36 @@ void main() {
     for(i = 0; i < 4; i++)
         printf("%d ", b[i]);
 
-    printf("\nArray c: ");
+    printf("\nArray c (partial): ");
     for(i = 0; i < 5; i++)
         printf("%d ", c[i]);
 
     printf("\nString stored in name = %s", name);
 
     getch();
-}`,
+}
+
+/*
+Output:
+Array a: 10 20 30 40 50
+Array b: 1 2 3 4
+Array c (partial): 7 8 0 0 0
+String stored in name = ARRAY
+*/`,
         },
         {
           type: "diagram",
-          title: "Memory layout of a one-dimensional array",
+          title: "Memory layout of array a[5] = {10,20,30,40,50}",
           content: `graph LR
-    A["a[0]<br/>10"] --> B["a[1]<br/>20"]
-    B --> C["a[2]<br/>30"]
-    C --> D["a[3]<br/>40"]
-    D --> E["a[4]<br/>50"]
-    F["Contiguous memory"] --> A`,
+    A["a[0]<br/>10<br/>addr: 1000"] --> B["a[1]<br/>20<br/>addr: 1004"]
+    B --> C["a[2]<br/>30<br/>addr: 1008"]
+    C --> D["a[3]<br/>40<br/>addr: 1012"]
+    D --> E["a[4]<br/>50<br/>addr: 1016"]
+    style A fill:#6366f1,stroke:#4f46e5,color:#fff
+    style B fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style C fill:#06b6d4,stroke:#0891b2,color:#fff
+    style D fill:#10b981,stroke:#059669,color:#fff
+    style E fill:#f59e0b,stroke:#d97706,color:#fff`,
         },
       ],
     },
@@ -217,7 +255,27 @@ void main() {
     printf("\nSum of non-diagonal elements = %d", nonDiagSum);
 
     getch();
-}`,
+}
+
+/*
+Sample Run (3x3 matrix):
+Enter order of square matrix: 3
+Enter matrix elements:
+1 2 3
+4 5 6
+7 8 9
+
+Matrix is:
+   1   2   3
+   4   5   6
+   7   8   9
+
+Sum of diagonal elements = 15
+Sum of non-diagonal elements = 30
+
+Explanation of diagonal (i==j): (0,0)=1, (1,1)=5, (2,2)=9  → 1+5+9 = 15
+Non-diagonal: all others          → 2+3+4+6+7+8 = 30
+*/`,
         },
         {
           type: "diagram",
@@ -257,38 +315,104 @@ void main() {
           type: "text",
           content: `## String Functions in C
 
-A **string** in C is a character array terminated by the null character \`'\\0'\`. String manipulation functions are available in the header file \`<string.h>\`.
+A **string** in C is a character array terminated by the null character \`'\\0'\`. All string manipulation functions are declared in the header file **\`<string.h>\`**.
 
-### 1. \`strlen(str)\`
-Returns the number of characters in the string excluding the null character.
+---
 
-### 2. \`strcpy(dest, src)\`
-Copies the source string into the destination string.
+### 1. \`strlen(str)\` — String Length
+**Syntax:** \`int strlen(char *str);\`
 
-### 3. \`strcat(dest, src)\`
-Appends the source string to the end of the destination string.
+Returns the number of characters in the string, **excluding** the terminating null character \`'\\0'\`.
 
-### 4. \`strcmp(str1, str2)\`
-Compares two strings lexicographically.
-- Returns 0 if both strings are equal
-- Returns negative or positive value otherwise
+**Example:** \`strlen("HELLO")\` returns **5**.
 
-### 5. \`strlwr(str)\`
-Converts all uppercase letters to lowercase. It is commonly available in older compilers such as Turbo C.
+---
+
+### 2. \`strcpy(dest, src)\` — String Copy
+**Syntax:** \`char *strcpy(char *dest, const char *src);\`
+
+Copies the entire source string (including \`'\\0'\`) into the destination array. The destination must be large enough to hold the source.
+
+**Example:** After \`strcpy(a, "RAM");\`, array \`a\` contains \`"RAM"\`.
+
+---
+
+### 3. \`strcat(dest, src)\` — String Concatenation
+**Syntax:** \`char *strcat(char *dest, const char *src);\`
+
+Appends the source string to the **end** of the destination string. The \`'\\0'\` of \`dest\` is removed and the source is joined.
+
+**Example:** \`strcat("Hello", "World")\` gives \`"HelloWorld"\`.
+
+---
+
+### 4. \`strcmp(str1, str2)\` — String Comparison
+**Syntax:** \`int strcmp(const char *str1, const char *str2);\`
+
+Compares two strings character by character (ASCII values):
+| Return Value | Meaning |
+|---|---|
+| **0** | Both strings are equal |
+| **Negative** | str1 comes before str2 alphabetically |
+| **Positive** | str1 comes after str2 alphabetically |
+
+**Example:** \`strcmp("abc", "abc")\` returns **0**.
+
+---
+
+### 5. \`strlwr(str)\` — Convert to Lowercase
+**Syntax:** \`char *strlwr(char *str);\`
+
+Converts all uppercase letters in the string to lowercase. It is available in **Turbo C / Borland C** compilers (not part of ANSI C standard).
+
+**Example:** \`strlwr("HELLO")\` returns \`"hello"\`.
+
+---
+
+### 6. \`strupr(str)\` — Convert to Uppercase
+**Syntax:** \`char *strupr(char *str);\`
+
+Converts all lowercase letters in the string to uppercase. Also available in Turbo C.
+
+**Example:** \`strupr("hello")\` returns \`"HELLO"\`.
+
+---
+
+### 7. \`strrev(str)\` — Reverse a String
+**Syntax:** \`char *strrev(char *str);\`
+
+Reverses the characters of the string in place (Turbo C extension).
+
+**Example:** \`strrev("HELLO")\` returns \`"OLLEH"\`.
+
+---
+
+### 8. \`strstr(haystack, needle)\` — Find Substring
+**Syntax:** \`char *strstr(const char *haystack, const char *needle);\`
+
+Searches for the **first occurrence** of the substring \`needle\` inside \`haystack\`. Returns a pointer to the match or \`NULL\` if not found.
+
+**Example:** \`strstr("Hello World", "World")\` returns pointer to \`"World"\`.
+
+---
 
 ## Summary Table
-| Function | Syntax | Example Result |
+
+| Function | Purpose | Return Value |
 |---|---|---|
-| \`strlen()\` | \`strlen(name)\` | \`"RAM"\` gives 3 |
-| \`strcpy()\` | \`strcpy(a, b)\` | copies \`b\` into \`a\` |
-| \`strcat()\` | \`strcat(a, b)\` | joins both strings |
-| \`strcmp()\` | \`strcmp(a, b)\` | 0 if equal |
-| \`strlwr()\` | \`strlwr(name)\` | converts to lowercase |`,
+| \`strlen(s)\` | Length of string | Integer (number of chars) |
+| \`strcpy(d, s)\` | Copy string s into d | Pointer to d |
+| \`strcat(d, s)\` | Append s to end of d | Pointer to d |
+| \`strcmp(s1,s2)\` | Compare two strings | 0 / negative / positive |
+| \`strlwr(s)\` | Convert to lowercase | Pointer to modified s |
+| \`strupr(s)\` | Convert to uppercase | Pointer to modified s |
+| \`strrev(s)\` | Reverse the string | Pointer to reversed s |
+| \`strstr(h, n)\` | Find substring in string | Pointer to match or NULL |`,
         },
         {
           type: "code",
           language: "c",
-          title: "Demonstration of common string functions",
+          title: "Demonstration of all major string functions",
           content: `#include<stdio.h>
 #include<conio.h>
 #include<string.h>
@@ -298,33 +422,72 @@ void main() {
     char s1[50] = "Hello";
     char s2[50] = "World";
     char copy[50];
+    char str[50] = "C Programming";
     int result;
 
-    printf("Length of s1 = %d\n", strlen(s1));
+    /* 1. strlen */
+    printf("1. strlen(\\"Hello\\") = %d\\n", strlen(s1));
 
+    /* 2. strcpy */
     strcpy(copy, s1);
-    printf("After strcpy, copy = %s\n", copy);
+    printf("2. After strcpy, copy = %s\\n", copy);
 
+    /* 3. strcat */
     strcat(s1, s2);
-    printf("After strcat, s1 = %s\n", s1);
+    printf("3. After strcat, s1 = %s\\n", s1);
 
+    /* 4. strcmp */
     result = strcmp("abc", "abc");
-    printf("Result of strcmp(abc, abc) = %d\n", result);
+    printf("4. strcmp(\\"abc\\",\\"abc\\") = %d\\n", result);
 
-    printf("Lowercase of WORLD = %s\n", strlwr(s2));
+    result = strcmp("abc", "xyz");
+    printf("   strcmp(\\"abc\\",\\"xyz\\") = %d (negative)\\n", result);
+
+    /* 5. strlwr */
+    strcpy(str, "HELLO");
+    printf("5. strlwr(\\"HELLO\\") = %s\\n", strlwr(str));
+
+    /* 6. strupr */
+    strcpy(str, "hello");
+    printf("6. strupr(\\"hello\\") = %s\\n", strupr(str));
+
+    /* 7. strrev */
+    strcpy(str, "HELLO");
+    printf("7. strrev(\\"HELLO\\") = %s\\n", strrev(str));
+
+    /* 8. strstr */
+    char *pos = strstr("C Programming", "gram");
+    printf("8. strstr found: %s\\n", pos);
 
     getch();
-}`,
+}
+
+/*
+Output:
+1. strlen("Hello") = 5
+2. After strcpy, copy = Hello
+3. After strcat, s1 = HelloWorld
+4. strcmp("abc","abc") = 0
+   strcmp("abc","xyz") = -23 (negative)
+5. strlwr("HELLO") = hello
+6. strupr("hello") = HELLO
+7. strrev("HELLO") = OLLEH
+8. strstr found: gramming
+*/`,
         },
         {
           type: "diagram",
-          title: "Effect of selected string functions",
+          title: "Effect of each string function at a glance",
           content: `graph LR
-    A["s1 = Hello"] --> B["strlen(s1) = 5"]
-    A --> C["strcpy(copy, s1) -> copy = Hello"]
-    A --> D["strcat(s1, World) -> HelloWorld"]
-    E["abc and abc"] --> F["strcmp() = 0"]
-    G["WORLD"] --> H["strlwr() -> world"]`,
+    A["Input String"] --> B["strlen → 5"]
+    A --> C["strcpy → new copy"]
+    A --> D["strcat → HelloWorld"]
+    A --> E["strcmp → 0 / ±n"]
+    A --> F["strlwr → hello"]
+    A --> G["strupr → HELLO"]
+    A --> H["strrev → OLLEH"]
+    A --> I["strstr → pointer to match"]
+    style A fill:#6366f1,stroke:#4f46e5,color:#fff`,
         },
       ],
     },

@@ -96,73 +96,139 @@ In theory answers, write at least **4 to 5 differences** and one small example.`
       blocks: [
         {
           type: "text",
-          content: `## Structure vs Union
+          content: `## Structure vs Union in C
 
-Both structure and union are user-defined data types in C, but they differ in **memory allocation** and **usage**.
+Both **structure** and **union** are user-defined data types in C. They allow grouping of related variables of different data types under one name. The key difference is in **how memory is allocated**.
 
-| Basis | Structure | Union |
+---
+
+### Memory Allocation
+
+- **Structure:** Each member gets its **own separate memory location**. The total size of a structure is (approximately) the **sum of the sizes of all its members** (may include padding bytes added by the compiler for alignment).
+
+- **Union:** All members **share the same memory location**. The total size of a union equals the size of its **largest member**. Only one member can reliably hold a value at a time.
+
+**Example:**
+\`\`\`c
+struct S { int i;   float f;  char c; }; /* size ≈ 4+4+1 = 9 (+ padding = 12 bytes) */
+union  U { int i;   float f;  char c; }; /* size = 4 bytes (largest member = int/float) */
+\`\`\`
+
+---
+
+### Comparison Table
+
+| Basis | Structure (\`struct\`) | Union (\`union\`) |
 |---|---|---|
 | Keyword | \`struct\` | \`union\` |
-| Memory allocation | Separate memory for every member | Common memory shared by all members |
-| Size | Sum of member sizes (plus padding if any) | Size of the largest member |
-| Simultaneous values | All members can hold values together | Only one member value is reliable at a time |
-| Modification effect | Changing one member does not affect others | Changing one member affects the shared memory |
-| Use | Complete records such as student, employee | Memory-saving situations |
+| Memory allocation | **Separate** memory for every member | **Shared** memory block for all members |
+| Total size | Sum of all member sizes (with alignment padding) | Size of the **largest** member |
+| Members active at once | **All** members can hold values simultaneously | Only **one** member value is reliable at a time |
+| Overwriting | Changing one member does **not** affect others | Assigning to one member **overwrites** the shared memory |
+| Typical use | Complete records — student, employee, product | Memory-saving when only one field is used at a time |
+| Access | Using dot operator: \`s.member\` | Using dot operator: \`u.member\` |
 
-### Example Meaning
-If a structure has \`int\`, \`float\`, and \`char\`, all three members can store values together.
+---
 
-In a union, the same memory block is reused, so writing a new member overwrites the previous stored representation.`,
+### Example: Writing a New Member in Union Corrupts Others
+
+If \`union U\` has members \`int i\`, \`float f\`, and \`char c\`:
+- After \`u.i = 101;\` — the 4-byte block stores the integer 101.
+- After \`u.f = 82.5;\` — the same block is overwritten with the float 82.5. The previous integer value is no longer meaningful.
+- After \`u.c = 'A';\` — only 1 byte is modified; \`u.i\` and \`u.f\` are now unpredictable.
+
+**In a structure**, all three members exist at different addresses, so changing \`s.f\` never touches \`s.i\`.`,
         },
         {
           type: "code",
           language: "c",
-          title: "Structure and union comparison example",
+          title: "Structure and union — memory size comparison",
           content: `#include<stdio.h>
 #include<conio.h>
 
 struct StudentStruct {
-    int roll;
-    float percentage;
-    char grade;
-};
+    int   roll;          /* 4 bytes */
+    float percentage;    /* 4 bytes */
+    char  grade;         /* 1 byte  */
+};                       /* total ~ 12 bytes (with alignment padding) */
 
 union StudentUnion {
-    int roll;
-    float percentage;
-    char grade;
-};
+    int   roll;          /* 4 bytes */
+    float percentage;    /* 4 bytes */
+    char  grade;         /* 1 byte  */
+};                       /* total = 4 bytes (size of largest member) */
 
 void main() {
     clrscr();
-    struct StudentStruct s = {101, 82.5, 'A'};
-    union StudentUnion u;
 
+    struct StudentStruct s;
+    union  StudentUnion  u;
+
+    /* In structure: all members can hold values at the same time */
+    s.roll       = 101;
+    s.percentage = 82.5;
+    s.grade      = 'A';
+
+    printf("=== Structure ===\\n");
+    printf("Roll       = %d\\n", s.roll);
+    printf("Percentage = %.2f\\n", s.percentage);
+    printf("Grade      = %c\\n", s.grade);
+    printf("Size of structure = %u bytes\\n\\n", sizeof(s));
+
+    /* In union: only the LAST assigned member is reliable */
     u.roll = 101;
-    u.percentage = 82.5;
-    u.grade = 'A';
+    printf("=== Union (after u.roll = 101) ===\\n");
+    printf("u.roll = %d\\n", u.roll);
 
-    printf("Structure values: %d %.2f %c\n", s.roll, s.percentage, s.grade);
-    printf("Size of structure = %u\n", sizeof(s));
-    printf("Size of union = %u\n", sizeof(u));
-    printf("In union, only the last assigned member is safely meaningful: %c\n", u.grade);
+    u.percentage = 82.5;         /* overwrites the shared memory */
+    printf("=== Union (after u.percentage = 82.5) ===\\n");
+    printf("u.percentage = %.2f  (reliable)\\n", u.percentage);
+    printf("u.roll       = %d    (unreliable -- corrupted)\\n", u.roll);
+
+    printf("\\nSize of union = %u bytes\\n", sizeof(u));
 
     getch();
-}`,
+}
+
+/*
+Output:
+=== Structure ===
+Roll       = 101
+Percentage = 82.50
+Grade      = A
+Size of structure = 12 bytes
+
+=== Union (after u.roll = 101) ===
+u.roll = 101
+=== Union (after u.percentage = 82.5) ===
+u.percentage = 82.50  (reliable)
+u.roll       = 1117745152    (unreliable -- corrupted)
+
+Size of union = 4 bytes
+*/`,
         },
         {
           type: "diagram",
-          title: "Separate memory vs shared memory",
+          title: "Separate memory (structure) vs shared memory (union)",
           content: `graph TD
-    subgraph Structure
-        A1["roll"]
-        A2["percentage"]
-        A3["grade"]
+    subgraph Structure["Structure — each member has its own block"]
+        A1["roll<br/>addr: 1000<br/>4 bytes"]
+        A2["percentage<br/>addr: 1004<br/>4 bytes"]
+        A3["grade<br/>addr: 1008<br/>1 byte"]
     end
-    subgraph Union
-        B1["Shared memory block"]
-        B2["roll / percentage / grade use the same block"]
-    end`,
+    subgraph Union["Union — all members share ONE block (4 bytes)"]
+        B1["Shared 4-byte block<br/>(addr: 2000)"]
+        B2["roll  → uses bytes 0-3"]
+        B3["percentage → uses bytes 0-3"]
+        B4["grade → uses byte 0 only"]
+        B1 --> B2
+        B1 --> B3
+        B1 --> B4
+    end
+    style A1 fill:#6366f1,color:#fff
+    style A2 fill:#8b5cf6,color:#fff
+    style A3 fill:#06b6d4,color:#fff
+    style B1 fill:#f59e0b,color:#fff`,
         },
       ],
     },
