@@ -1127,4 +1127,638 @@ for(i = 0; i < 1000000; i++) { ... }
 \`\`\`
 
 **Exam strategy:** Lead with static (most marks-worthy), then extern, then auto, register last.`,
+
+  // ─────────────── CO4 Notes ───────────────
+
+  "co4-q1": `**Array = same-type elements in contiguous memory, accessed by index starting at 0.**
+
+**5 ways to initialise — memorise all 5:**
+1. At declaration: \`int a[5] = {10, 20, 30, 40, 50};\`
+2. Partial: \`int a[5] = {10, 20};\` → rest auto-filled with **0**
+3. Without size: \`int a[] = {10, 20, 30};\` → compiler counts for you
+4. At runtime: \`scanf("%d", &a[i]);\`
+5. Index-wise: \`a[0] = 1; a[1] = 2;\`
+
+**2-D array trick:** Think of it as a table — \`mat[row][col]\`. Stored row-by-row in memory (row-major order).
+
+**Exam tip:** If asked "define" an array — give both declaration AND an initialisation example. If asked "explain ways" — list all 5 methods with small code snippets.`,
+
+  "co4-q2": `**Properties = what arrays ARE; Advantages = what's good; Disadvantages = what's bad.**
+
+**Top 3 advantages (most marks-worthy):**
+- Random access in O(1) using index
+- Memory-efficient (no extra pointer overhead)
+- Easy to loop/traverse
+
+**Top 3 disadvantages (most marks-worthy):**
+- Fixed size — cannot grow at runtime ← **most important!**
+- Insertion/deletion is O(n) due to shifting
+- Single data type only
+
+**Exam trick:** "Fixed size" is BOTH a property AND a disadvantage — state it in both sections.`,
+
+  "co4-q3": `**Bubble Sort = compare adjacent pairs, swap if wrong order. Largest element "bubbles" to end each pass.**
+
+**Two nested loops:**
+- Outer loop → controls number of passes (n-1 passes)
+- Inner loop → does the comparisons and swaps
+
+**Time complexity: O(n²)** — mention this in the answer for extra marks.
+
+**Common exam mistake:** Writing \`j < n\` instead of \`j < n-i-1\` in inner loop → this causes incorrect sort.
+
+**Memory trick:** "BubbleSort = neighbours fight, biggest always wins and moves to the right."`,
+
+  "co4-q4": `**Diagonal condition: i == j (row index equals column index). That's the ONLY thing to remember.**
+
+\`\`\`
+Matrix:   1  2  3      Diagonal  = (0,0)(1,1)(2,2) = 1+5+9 = 15
+          4  5  6      Non-diag  = everything else  = 30
+          7  8  9
+\`\`\`
+
+**Works only for SQUARE matrices (n×n).** Mention this in your answer.
+
+**One-pass solution:** Single double loop — inside, \`if(i==j)\` adds to diag_sum, else adds to non_diag_sum. Clean and efficient.
+
+**Exam tip:** Draw the 3×3 table showing which elements are diagonal (highlighted) before writing code — examiners appreciate it.`,
+
+  "co4-q5": `**No strrev() allowed — use the two-pointer swap trick instead.**
+
+**Step-by-step logic:**
+1. Manually find length: \`while(str[len] != '\\0') len++;\`
+2. Set \`left = 0\`, \`right = len - 1\`
+3. Swap \`str[left]\` and \`str[right]\`, then \`left++; right--;\`
+4. Stop when \`left >= right\`
+
+**Example:** "HELLO" → swap H↔O → "OELLH" → swap E↔L → "OLLEH" ✓
+
+**Exam hint:** The question says "without standard library function" — so do NOT use \`strrev()\`. The manual two-pointer method earns full marks.`,
+
+  "co4-q6": `**Linear search = check each element one by one from the start.**
+
+**Algorithm in 2 lines:** Loop from i=0 to n-1. If arr[i] == key → found, print position and stop. If loop finishes without finding → print "not found".
+
+**Complexity: O(n)** in worst case.
+
+**Use a \`found\` flag (0/1)** to distinguish "found" vs "not found" after the loop.
+
+**Binary search vs Linear search (if asked to compare):**
+- Linear: works on unsorted array, O(n)
+- Binary: needs sorted array, O(log n)
+
+**Exam tip:** Always print the 1-based position (i+1), not the 0-based index (i). Examiners expect human-readable output.`,
+
+  "co4-q7": `**ASCII trick: uppercase 'A'–'Z' = 65–90; lowercase 'a'–'z' = 97–122.**
+
+**Two approaches (both valid for exam):**
+
+Approach 1 — ASCII range check:
+\`\`\`c
+if(ch >= 'A' && ch <= 'Z') upper++;
+else if(ch >= 'a' && ch <= 'z') lower++;
+\`\`\`
+
+Approach 2 — ctype.h functions:
+\`\`\`c
+if(isupper(ch)) upper++;
+else if(islower(ch)) lower++;
+\`\`\`
+
+**Using function (for 8-mark version):** Define \`void countCase(char str[], int *upper, int *lower)\` and pass pointers. This demonstrates call-by-reference.
+
+**Exam tip:** The Aug 2023 version specifically asks "using function" — remember to define a separate function, not inline logic in main().`,
+
+  "co4-q8": `**All string functions need \`#include <string.h>\`** — write this at the top of every string program.
+
+**Quick reference (memorise syntax + return):**
+
+| Function | Returns | Key point |
+|----------|---------|-----------|
+| \`strlen(s)\` | int (length) | does NOT count '\\0' |
+| \`strcpy(dest, src)\` | dest ptr | copies INCLUDING '\\0' |
+| \`strcat(dest, src)\` | dest ptr | dest must be large enough |
+| \`strcmp(s1, s2)\` | 0 / <0 / >0 | 0 = equal |
+| \`strlwr(s)\` | s (modified) | Turbo C only |
+
+**strcmp return values — most common exam trap:**
+- Returns **0** if strings are EQUAL (not 1!)
+- Returns negative if s1 < s2
+- Returns positive if s1 > s2
+
+**Memory aid:** "str functions work on null-terminated arrays — always ensure destination has enough space to avoid buffer overflow."`,
+
+  "co4-q9": `**Transpose = rows become columns and columns become rows. mat[i][j] ↔ mat[j][i]**
+
+**Two approaches:**
+
+1. **In-place** (swap upper triangle with lower triangle):
+\`\`\`c
+for(i=0; i<m; i++)
+  for(j=i+1; j<m; j++)
+    swap(mat[i][j], mat[j][i]);
+\`\`\`
+
+2. **Extra matrix** (create new matrix trans[j][i] = mat[i][j])
+
+**For m×n (non-square):** The result is n×m. Use a separate output matrix.
+
+**Exam tip:** If m=n (square), you can transpose in-place. If m≠n, you MUST use a separate matrix. Show the before/after table in your answer.`,
+
+  "co4-q10": `**Three categories — check each character:**
+- Blank space: \`ch == ' '\`
+- Digit: \`ch >= '0' && ch <= '9'\` (or \`isdigit(ch)\`)
+- Vowel: \`ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u'\` (check both cases!)
+
+**Don't forget lowercase AND uppercase vowels:**
+\`ch == 'a' || ch == 'A' || ch == 'e' || ch == 'E' ...\`
+
+OR convert to lowercase first: \`ch = tolower(ch)\`, then check only lowercase vowels.
+
+**Use \`gets()\`** (not \`scanf("%s")\`) to read strings with spaces — \`scanf\` stops at whitespace!
+
+**Exam tip:** This is a 2-mark question — a short, clean function covering all 3 counters in one loop earns full marks.`,
+
+  "co4-q11": `**Reverse array using function = two-pointer swap passed by reference (pointer).**
+
+**Pattern:**
+\`\`\`c
+void reverseArray(int arr[], int n) {
+    int left = 0, right = n - 1, temp;
+    while (left < right) {
+        temp = arr[left]; arr[left] = arr[right]; arr[right] = temp;
+        left++; right--;
+    }
+}
+\`\`\`
+
+**Key exam points:**
+- Arrays are automatically passed by reference in C (no & needed for array name)
+- Two-pointer technique: O(n/2) swaps = O(n) time, O(1) extra space
+- Print both BEFORE and AFTER reversal to show the result clearly
+
+**Memory tip:** left pointer starts at 0 (beginning), right pointer starts at n-1 (end). They move towards each other.`,
+
+  "co4-q12": `**4 differences — String vs Single Character:**
+
+| Feature | String | Character |
+|---------|--------|-----------|
+| Declaration | \`char s[10] = "Hello";\` | \`char c = 'A';\` |
+| Format spec | \`%s\` | \`%c\` |
+| Memory | Multiple bytes + \\0 | Exactly 1 byte |
+| Null terminator | Must end with \`'\\0'\` | Not applicable |
+
+**Key exam points:**
+- \`"A"\` (string) occupies **2 bytes**: character 'A' + null '\\0'
+- \`'A'\` (char) occupies **1 byte**
+- A string is an **array of characters**; a char is a single character
+- Use double quotes for strings, single quotes for characters
+
+**Exam trap:** The question asks for 4 differences — list exactly 4 with a clear table.`,
+
+  "co4-q13": `**Find min and max in one pass — initialise both to arr[0], then scan from arr[1].**
+
+\`\`\`
+arr = {45, 12, 78, 3, 99, 56}
+min = arr[0] = 45, max = arr[0] = 45
+i=1: arr[1]=12 → 12 < min → min = 12
+i=2: arr[2]=78 → 78 > max → max = 78
+i=3: arr[3]=3  → 3 < min  → min = 3
+i=4: arr[4]=99 → 99 > max → max = 99
+i=5: arr[5]=56 → no change
+Result: min = 3, max = 99
+\`\`\`
+
+**Important:** Let user decide n — use \`scanf("%d", &n)\` first, then declare \`int arr[n]\` (VLA) or use a fixed large array like \`int arr[100]\`.
+
+**Exam tip:** Always print both minimum AND maximum to show complete output.`,
+
+  "co4-q14": `**String operations to remember (at least 5):**
+1. Length — \`strlen()\`
+2. Copy — \`strcpy()\`
+3. Concatenation — \`strcat()\`
+4. Comparison — \`strcmp()\`
+5. Reversal — \`strrev()\`
+6. Uppercase/Lowercase — \`strupr()\` / \`strlwr()\`
+
+**For counting digits, alphabets, special chars (3-category classifier):**
+\`\`\`
+if isAlpha → alpha++
+else if isDigit → digit++
+else → special++   (includes spaces, punctuation, etc.)
+\`\`\`
+
+**Use ASCII ranges or ctype.h functions:**
+- Alpha: \`(ch>='A'&&ch<='Z')||(ch>='a'&&ch<='z')\` or \`isalpha(ch)\`
+- Digit: \`ch>='0'&&ch<='9'\` or \`isdigit(ch)\`
+- Special: everything else
+
+**Exam tip (10-mark question):** First explain all string operations with a table, THEN write the counting program. This structure clearly earns all marks.`,
+
+  // ─────────────── CO5 Notes ───────────────
+
+  "co5-q1": `**Structure = user-defined data type grouping variables of DIFFERENT types under one name.**
+
+**C program structure — 6 sections in order:**
+1. Documentation (comments)
+2. Link/Include (\`#include\`)
+3. Definition (\`#define\`)
+4. Global declarations
+5. \`main()\` function
+6. Sub-programs (user functions)
+
+**Accessing struct members:**
+- Dot operator \`.\` — with variable: \`s1.rollno = 101;\`
+- Arrow operator \`->\` — with pointer: \`ptr->rollno = 101;\`
+
+**Exam tip:** When asked for "C syntax of structure", show declaration + variable creation + member access all together. 2-mark question — keep it concise with a working example.`,
+
+  "co5-q2": `**Structure Point P(x, y) — the simplest possible struct example.**
+
+\`\`\`c
+struct Point { int x; int y; };
+struct Point p1 = {3, 7};  /* initialise at declaration */
+printf("P(%d, %d)", p1.x, p1.y);
+\`\`\`
+
+**Declaration and initialisation in one line:** \`struct Point p = {x_val, y_val};\`
+
+**Alternatively, assign after declaration:**
+\`\`\`c
+struct Point p2;
+p2.x = 10;  p2.y = -5;
+\`\`\`
+
+**Exam hint:** The question says "Also display the coordinates" — make sure your printf output shows P(x, y) format, not just x and y separately.`,
+
+  "co5-q3": `**Core difference: struct → each member has OWN memory; union → ALL members SHARE memory.**
+
+**Size rules (most common exam question):**
+- \`sizeof(struct)\` = sum of all member sizes (+ padding)
+- \`sizeof(union)\` = size of LARGEST member
+
+**Memory trick:** Union = "one room, many people — but only one person at a time!"
+
+**When to use union:** When only ONE value out of several alternatives is needed at a time (saves memory).
+
+**strcmp return trap for struct comparison:**
+- Comparing structs: use field-by-field comparison
+- Cannot use \`==\` directly on structs in C
+
+**Exam tip (5-mark question):** Show the size calculation + code demonstrating that changing one union member corrupts others. This illustrates the shared-memory concept clearly.`,
+
+  "co5-q4": `**Nested structure = a structure containing another structure as a member.**
+
+**Access rule: outer.inner.member (two dots for one level of nesting)**
+
+\`\`\`c
+d.prod.id   /* delivery → product → id */
+d.prod.cost /* delivery → product → cost */
+\`\`\`
+
+**4 key rules to state in exam:**
+1. Inner struct must be DECLARED BEFORE outer struct
+2. Access with double dot: \`outer.inner.member\`
+3. Can be nested to multiple levels
+4. Size of outer = sum of all members INCLUDING nested struct size
+
+**Use case:** Delivery contains a Product — the product itself has multiple fields. Nesting is more natural than duplicating fields.
+
+**Exam tip (8-mark question):** Draw the diagram showing the hierarchy (delivery → product), then write the complete program with input and output.`,
+
+  "co5-q5": `**Structure array pattern — the most common exam programming pattern for structures.**
+
+\`\`\`c
+struct Cricketer c[MAX];   /* array of structures */
+for(i=0; i<MAX; i++) {
+    gets(c[i].name);        /* string input */
+    scanf("%d", &c[i].total_matches);
+    getchar();              /* consume leftover newline */
+}
+\`\`\`
+
+**getchar() rule:** Always call \`getchar()\` after \`scanf()\` before the next \`gets()\` — otherwise gets() reads the leftover newline as an empty string!
+
+**Tabular output:** Use \`%-20s\` for left-aligned name, \`%8d\` for right-aligned numbers.
+
+**Exam tip:** 5 cricketers is the typical count. Define \`#define MAX 5\` at the top — makes it easy to change.`,
+
+  "co5-q6": `**Same pattern as the Cricketer program — struct array + tabular output.**
+
+**The key fields for this program:**
+\`\`\`
+name (string), age (int), matches (int), runs (int), average (float)
+\`\`\`
+
+**Formatted tabular print pattern:**
+\`\`\`c
+printf("%-20s %5d %8d %8d %8.2f\\n", p[i].name, p[i].age, p[i].matches, p[i].runs, p[i].average);
+\`\`\`
+
+**getchar() rule:** After each \`scanf()\` that precedes \`gets()\`, call \`getchar()\` to consume the newline.
+
+**Exam hint:** The question specifically says "tabular format" — draw column headers with separator lines using \`printf\`. This earns presentation marks.`,
+
+  "co5-q7": `**Struct + Bubble Sort on a specific field = classic 4-mark exam combination.**
+
+**Bubble sort on struct array (sort by emp[].code):**
+\`\`\`c
+for(i=0; i<n-1; i++)
+    for(j=0; j<n-i-1; j++)
+        if(emp[j].code > emp[j+1].code) {
+            temp = emp[j];      /* swap entire struct */
+            emp[j] = emp[j+1];
+            emp[j+1] = temp;
+        }
+\`\`\`
+
+**Key:** Swap the ENTIRE struct (not just the field). Declare \`struct Employer temp;\` as the temporary variable.
+
+**For sorting by name:** Use \`strcmp(emp[j].name, emp[j+1].name) > 0\` instead of the \`>\` comparison.
+
+**Exam tip:** Define the structure BEFORE main(). Sort THEN display — two separate loops for clarity.`,
+
+  "co5-q8": `**50 students, descending order of percentage — the most-repeated CO5 exam program.**
+
+**Descending Bubble Sort — swap condition is REVERSED:**
+\`\`\`c
+if(stu[j].percentage < stu[j+1].percentage) { /* swap */ }
+/* Note: < not > for descending order */
+\`\`\`
+
+**Structure fields needed:**
+\`\`\`c
+struct Student { int rollno; char name[50]; float percentage; };
+\`\`\`
+
+**Common mistake:** Writing \`>\` instead of \`<\` in the swap condition for descending sort.
+
+**Memory trick:** "Descending = biggest first = swap when LEFT is SMALLER than RIGHT."
+
+**Exam tip:** This question appears in May 2023 (twice — different papers), Aug 2023, and May 2024. Memorise this pattern completely — it's guaranteed to appear!`,
+
+  "co5-q9": `**Hospital records + disease filter = struct array + string comparison using strcmp().**
+
+**Filter pattern:**
+\`\`\`c
+if(strcmp(patients[i].disease, target_disease) == 0) {
+    /* print this patient */
+}
+\`\`\`
+
+**strcmp returns 0 when strings are EQUAL** — the most common exam trap is using \`== 1\` instead of \`== 0\`.
+
+**Date of birth as string:** Store as \`char dob[15]\` (e.g., "15/08/1990") — simpler than a struct for DOB.
+
+**Exam tip:** After reading all records, ask the user for the disease to search. Then loop through all records and print matches. Show "No patient found" if no match — good programming practice.`,
+
+  "co5-q10": `**Player structure sorted by batting average (descending) — another classic array-of-structs sort.**
+
+**Descending sort on float field:**
+\`\`\`c
+if(players[j].batting_avg < players[j+1].batting_avg) {
+    temp = players[j];
+    players[j] = players[j+1];
+    players[j+1] = temp;
+}
+\`\`\`
+
+**Three fields: name (string), team (string), batting_avg (float)**
+
+**This question appears in both Aug 2023 (4 marks) and Aug 2025 (10 marks).** For the 10-mark version: add more detailed output, handle more players, show before/after sorting.
+
+**Exam tip:** Use \`#define MAX 5\` or \`#define MAX 10\` at the top. For the 10-mark version, use 5+ players and print a formatted table.`,
+
+  "co5-q11": `**Employee sorted by name = alphabetical sort using strcmp().**
+
+**strcmp() for sorting strings:**
+\`\`\`c
+if(strcmp(emp[j].name, emp[j+1].name) > 0) {
+    /* swap: emp[j] comes AFTER emp[j+1] alphabetically */
+}
+\`\`\`
+
+**strcmp > 0 means first string is "greater" (comes later in alphabet)** → swap to put it after.
+
+**Fields: id (int), name (char array), salary (float)**
+
+**Exam tip (10-mark question from Jun 2025):**
+1. Define struct with 3 fields
+2. Read n employee records
+3. Sort using bubble sort with strcmp
+4. Display in sorted order with tabular formatting
+5. Show sample output
+
+Cover all 5 points for full marks.`,
+
+  "co5-q12": `**Union = shared memory. All members start at the SAME address. Only last assignment is valid.**
+
+**Key facts (must state in exam):**
+- \`sizeof(union)\` = size of **largest** member
+- All members share same memory = changing one corrupts others
+- Only ONE member should be active at a time
+
+**Practical use case:** When a variable can hold EITHER an int OR a float (but never both simultaneously). Example: sensor data (count OR temperature).
+
+**Memory layout comparison:**
+\`\`\`
+struct { int i; float f; char c; }  → 9+ bytes (each has own space)
+union  { int i; float f; char c; }  → 4 bytes  (all share same 4 bytes)
+\`\`\`
+
+**Exam tip (5-mark question):** Define union, create a variable, show that assigning v.ival=65 and then reading v.cval gives 'A' (same memory = same bytes). This demonstrates shared memory brilliantly.`,
+
+  // ─────────────── CO6 Notes ───────────────
+
+  "co6-q1": `**Post-increment trap: \`y = (*ip)++\` → y gets OLD value, then *ip increments.**
+
+**Trace step by step:**
+\`\`\`
+x = 10, ip = &x
+y = (*ip)++  →  y = 10 (old value), x becomes 11
+printf(y)    →  10
+printf(*ip)  →  11  (x is now 11)
+\`\`\`
+
+**Pre-increment vs Post-increment with pointers:**
+- \`y = (*ip)++\` → y = old value, *ip increments after → y = 10, *ip = 11
+- \`y = ++(*ip)\` → *ip increments first, y = new value → y = 11, *ip = 11
+
+**Exam hint:** Draw the memory boxes — show x and y separately, with ip pointing to x. This makes the trace visual and clear.`,
+
+  "co6-q2": `**\`int *ptr;\` = "ptr is a pointer TO an integer" — stores an address, not a value.**
+
+**Two key operators:**
+- \`&\` (address-of): \`ptr = &x;\` → ptr now holds address of x
+- \`*\` (dereference): \`*ptr\` → reads value AT the address in ptr
+
+**Memory picture:**
+\`\`\`
+int x = 42;      int *ptr = &x;
+[addr 2000] = 42  ← x
+[addr 3000] = 2000 ← ptr (stores address of x)
+*ptr = 42  (value at address 2000)
+\`\`\`
+
+**Key point:** A pointer occupies the SAME size regardless of what it points to (typically 4 bytes on 32-bit, 8 bytes on 64-bit).
+
+**Exam tip:** Always declare pointer as \`type *name;\` — the type tells C how many bytes to read when dereferencing.`,
+
+  "co6-q3": `**Array name IS a pointer to the first element: \`arr == &arr[0]\`**
+
+**Equivalence table (most important to memorise):**
+| Array notation | Pointer notation | Meaning |
+|---------------|-----------------|---------|
+| \`arr[0]\` | \`*arr\` or \`*(arr+0)\` | First element |
+| \`arr[i]\` | \`*(arr+i)\` | i-th element |
+| \`&arr[i]\` | \`arr+i\` | Address of i-th element |
+
+**Key insight:** When you write \`arr[i]\`, C converts it to \`*(arr+i)\` internally. They are identical.
+
+**Traversal using pointer:**
+\`\`\`c
+int *p = arr;
+while(p <= &arr[n-1]) { printf("%d ", *p); p++; }
+\`\`\`
+
+**Exam tip:** Draw the memory layout showing addresses and values side-by-side — this earns full marks for the "explain with example" part.`,
+
+  "co6-q4": `**Swap using pointers = pass addresses, dereference inside function.**
+
+\`\`\`c
+void swap(int *a, int *b) {
+    int temp = *a;   /* save value at address a */
+    *a = *b;         /* put b's value at a's address */
+    *b = temp;       /* put saved value at b's address */
+}
+/* Call: */ swap(&x, &y);
+\`\`\`
+
+**Why pointers are needed:** Without pointers, swap() gets COPIES — swapping copies doesn't affect originals (call by value fails).
+
+**Memory trace:**
+\`\`\`
+Before: x = 10, y = 20
+swap(&x, &y): *a=10, *b=20 → *a=20, *b=10
+After:  x = 20, y = 10  ✓
+\`\`\`
+
+**Exam tip (8-mark question):** Show BOTH the failing "call by value" attempt AND the working "call by reference" solution. This demonstrates understanding of WHY pointers are needed.`,
+
+  "co6-q5": `**8 types of pointers — most common 5 in exams: NULL, Wild, Dangling, Void, Pointer-to-Pointer.**
+
+**Quick danger matrix:**
+| Type | Safe? | Why dangerous? |
+|------|-------|----------------|
+| NULL | ✓ Safe | Points to nothing — check before use |
+| Wild | ✗ Dangerous | Uninitialized — garbage address |
+| Dangling | ✗ Dangerous | Points to freed memory |
+| Void | ✓ (with cast) | Must cast before dereferencing |
+| Double ptr | ✓ | Stores address of pointer |
+
+**Fix for wild/dangling pointers:** Always initialize to NULL.
+\`\`\`c
+int *p = NULL;          /* not wild */
+free(p); p = NULL;      /* not dangling */
+\`\`\`
+
+**Exam tip:** For each pointer type, state: definition + example declaration + when it's dangerous (or useful). 5 types × ~4 lines = easy 4-5 marks.`,
+
+  "co6-q6": `**malloc vs calloc — the most tested difference:**
+
+| | malloc | calloc |
+|-|--------|--------|
+| Arguments | 1 (total bytes) | 2 (count, size) |
+| Initialisation | Garbage (uninitialized) | **Zero** |
+| Example | \`malloc(5 * sizeof(int))\` | \`calloc(5, sizeof(int))\` |
+
+**Golden rules (state these in every answer):**
+1. Always check if returned pointer is NULL (allocation may fail!)
+2. Always \`free()\` after use to avoid memory leak
+3. Set pointer to NULL after free to avoid dangling pointer
+
+**Memory trick:** "calloc = clear alloc (zero-fills), malloc = raw alloc (garbage)."
+
+**realloc:** Resizes existing allocation. Original data preserved up to min(old, new) size.
+
+**Exam tip (8-mark question):** Cover all 4 functions — malloc, calloc, realloc, free — with syntax, purpose, and a small code example for each.`,
+
+  "co6-q7": `**File handling = 5-step pattern: declare FILE* → fopen → check NULL → read/write → fclose.**
+
+**File mode cheat sheet:**
+| Mode | Action |
+|------|--------|
+| \`"r"\` | Read existing file |
+| \`"w"\` | Write (creates new or overwrites) |
+| \`"a"\` | Append (add to end) |
+| \`"r+"\` | Read + Write existing |
+
+**Two reading patterns:**
+- Character by character: \`fgetc(fp)\` / \`fputc(ch, fp)\`
+- Line by line: \`fgets(buf, size, fp)\` / \`fputs(str, fp)\`
+- Formatted: \`fscanf(fp, ...)\` / \`fprintf(fp, ...)\`
+
+**End of file check:** \`while(fscanf(...) != EOF)\` or \`while(fgets(...) != NULL)\`
+
+**Exam tip (8-mark question):** Write a complete program that BOTH writes data to a file AND reads it back. This shows the full workflow and earns all marks.`,
+
+  "co6-q8": `**Pointer arithmetic is scaled by type size — \`ptr+1\` moves by \`sizeof(*ptr)\` bytes, NOT 1 byte.**
+
+**Scale factor table:**
+| Pointer type | sizeof | ptr+1 moves by |
+|-------------|--------|----------------|
+| \`char *\` | 1 | 1 byte |
+| \`int *\` | 4 | 4 bytes |
+| \`float *\` | 4 | 4 bytes |
+| \`double *\` | 8 | 8 bytes |
+
+**Equivalence:**
+\`\`\`c
+arr[i] == *(arr + i)     /* array indexing = pointer arithmetic */
+&arr[i] == arr + i       /* address */
+\`\`\`
+
+**Pointer subtraction:** \`ptr2 - ptr1\` gives number of ELEMENTS between them (not bytes).
+
+**Exam tip:** Draw the memory addresses for a 5-element int array showing addresses 1000, 1004, 1008... to illustrate the 4-byte increment.`,
+
+  "co6-q9": `**Call by value = COPY sent; Call by reference = ADDRESS sent (use pointers).**
+
+**The key rule:** If a function needs to MODIFY the original variable → use call by reference (pass &variable, receive *pointer, modify *pointer).
+
+**Comparison table:**
+| Feature | Call by Value | Call by Reference |
+|---------|---------------|-------------------|
+| What is passed | Copy of value | Address of variable |
+| Original variable | Unchanged | Modified |
+| Function signature | \`void f(int x)\` | \`void f(int *x)\` |
+| Call syntax | \`f(a)\` | \`f(&a)\` |
+
+**Swap example (must know both versions):**
+- By value: swap doesn't work (local copies only)
+- By reference: \`temp = *a; *a = *b; *b = temp;\` ← works!
+
+**Exam tip:** Always show BOTH versions side by side and run both to demonstrate that only call-by-reference actually swaps. This earns full marks.`,
+
+  "co6-q10": `**Static = compile time (stack/data segment, fixed size, auto freed). Dynamic = runtime (heap, flexible size, manual free).**
+
+**The 3 critical differences examiners look for:**
+1. **When:** Static at compile time vs Dynamic at runtime
+2. **Where:** Static on stack/data segment vs Dynamic on heap
+3. **Freedom:** Static size is fixed vs Dynamic size is flexible
+
+**The heap vs stack memory picture (must draw this):**
+\`\`\`
+ Stack (static locals)  ↕  grows toward each other  ↕  Heap (dynamic/malloc)
+\`\`\`
+
+**Golden rule for dynamic memory:**
+\`\`\`c
+ptr = malloc(n * sizeof(int));   /* allocate */
+if (ptr == NULL) { /* error */ } /* check */
+/* ... use ptr ... */
+free(ptr); ptr = NULL;           /* free + set NULL */
+\`\`\`
+
+**Exam tip (4-mark question):** Draw the comparison table (9 rows) and show a small code example of both — static \`int arr[10];\` vs dynamic \`int *arr = malloc(10 * sizeof(int));\`. Mention the risk of memory leak if \`free()\` is forgotten.`,
 }

@@ -361,6 +361,36 @@ For an **n × n** (square) matrix:
 - **Non-diagonal sum** = 2 + 3 + 4 + 6 + 7 + 8 = **30**`,
         },
         {
+          type: "diagram",
+          title: "Flowchart – Diagonal and Non-Diagonal Sum",
+          content: `graph TD
+    S([Start]) --> IN[/Read n and matrix elements/]
+    IN --> INIT["i = 0, diag = 0, non_diag = 0"]
+    INIT --> OL{"i < n?"}
+    OL -->|No| PRINT[/Print diag_sum and non_diag_sum/]
+    OL -->|Yes| IL["j = 0"]
+    IL --> IC{"j < n?"}
+    IC -->|No| OINC["i++"]
+    OINC --> OL
+    IC -->|Yes| CHK{"i == j?"}
+    CHK -->|Yes| DS["diag_sum += mat[i][j]"]
+    CHK -->|No| NDS["non_diag_sum += mat[i][j]"]
+    DS --> JINC["j++"]
+    NDS --> JINC
+    JINC --> IC
+    PRINT --> E([End])
+    style S fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style IN fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style INIT fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style OL fill:#f59e0b,stroke:#d97706,color:#fff
+    style IC fill:#f59e0b,stroke:#d97706,color:#fff
+    style CHK fill:#f59e0b,stroke:#d97706,color:#fff
+    style DS fill:#10b981,stroke:#059669,color:#fff
+    style NDS fill:#ef4444,stroke:#dc2626,color:#fff
+    style PRINT fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style E fill:#0ea5e9,stroke:#0284c7,color:#fff`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Program – Sum of Diagonal and Non-Diagonal Elements",

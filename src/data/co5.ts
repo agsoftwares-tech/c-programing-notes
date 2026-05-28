@@ -1056,8 +1056,8 @@ void main() {
 Sample Output:
 Rank  Player               Team                 Batting Avg
 ----  ------               ----                 -----------
-1     Virat Kohli          India                      59.07
-2     Steve Smith          Australia                  59.55
+1     Steve Smith          Australia                  59.55
+2     Virat Kohli          India                      59.07
 3     Kane Williamson      New Zealand                54.98
 4     Joe Root             England                    51.50
 5     Rohit Sharma         India                      48.96
