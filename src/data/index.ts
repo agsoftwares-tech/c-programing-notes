@@ -1,6 +1,9 @@
 import { co1 } from "./co1"
 import { co2 } from "./co2"
 import { co3 } from "./co3"
+import { co4 } from "./co4"
+import { co5 } from "./co5"
+import { co6 } from "./co6"
 import { module1 } from "./module1"
 import { module2 } from "./module2"
 import { module3 } from "./module3"
@@ -28,6 +31,9 @@ export const courseOutcomes: CourseOutcome[] = mergeNotes([
   co1,
   co2,
   co3,
+  co4,
+  co5,
+  co6,
   module1,
   module2,
   module3,
