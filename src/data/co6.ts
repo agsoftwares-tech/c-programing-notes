@@ -871,6 +871,7 @@ void main() {
     clrscr();
     int arr[5] = {10, 20, 30, 40, 50};
     int *p = arr;
+    int *start, *end;
     int i;
 
     printf("Pointer Arithmetic (int array, sizeof int = %d bytes):\\n\\n",
@@ -882,8 +883,8 @@ void main() {
     }
 
     printf("\\nSubtracting two pointers:\\n");
-    int *start = &arr[0];
-    int *end   = &arr[4];
+    start = &arr[0];
+    end   = &arr[4];
     printf("&arr[4] - &arr[0] = %d (elements apart)\\n",
            (int)(end - start));
 

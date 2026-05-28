@@ -652,6 +652,35 @@ Element 20 not found in the array
 | '0' – '9' | 48 – 57 (Digits) |`,
         },
         {
+          type: "diagram",
+          title: "Flowchart – Count Upper and Lower Case Characters",
+          content: `graph TD
+    S([Start]) --> IN[/Read sentence/]
+    IN --> INIT["i = 0, upper = 0, lower = 0"]
+    INIT --> CHECK{"str[i] != '\\\\0'?"}
+    CHECK -->|No| PRINT[/Print upper and lower counts/]
+    CHECK -->|Yes| CMP1{"str[i] >= 'A' AND <= 'Z'?"}
+    CMP1 -->|Yes| IU["upper++"]
+    CMP1 -->|No| CMP2{"str[i] >= 'a' AND <= 'z'?"}
+    CMP2 -->|Yes| IL["lower++"]
+    CMP2 -->|No| SKIP["skip (digit/space)"]
+    IU --> INC["i++"]
+    IL --> INC
+    SKIP --> INC
+    INC --> CHECK
+    PRINT --> E([End])
+    style S fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style IN fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style INIT fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style CHECK fill:#f59e0b,stroke:#d97706,color:#fff
+    style CMP1 fill:#f59e0b,stroke:#d97706,color:#fff
+    style CMP2 fill:#f59e0b,stroke:#d97706,color:#fff
+    style IU fill:#10b981,stroke:#059669,color:#fff
+    style IL fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style PRINT fill:#6366f1,stroke:#4f46e5,color:#fff
+    style E fill:#0ea5e9,stroke:#0284c7,color:#fff`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Program – Count Upper and Lower Case (Using Function)",
@@ -1078,6 +1107,30 @@ Original: 10  20  30  40  50
 
 Reversed: 50  40  30  20  10
 \`\`\``,
+        },
+        {
+          type: "diagram",
+          title: "Flowchart – Reverse Array Using Function",
+          content: `graph TD
+    S([Start]) --> IN[/Read n and array elements/]
+    IN --> INIT["left = 0, right = n - 1"]
+    INIT --> CALL["Call reverseArray(arr, n)"]
+    CALL --> CHECK{"left < right?"}
+    CHECK -->|No| RET["Return to main"]
+    CHECK -->|Yes| SWAP["temp = arr[left]\\narr[left] = arr[right]\\narr[right] = temp"]
+    SWAP --> MOVE["left++, right--"]
+    MOVE --> CHECK
+    RET --> PRINT[/Print reversed array/]
+    PRINT --> E([End])
+    style S fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style IN fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style INIT fill:#38bdf8,stroke:#0ea5e9,color:#fff
+    style CALL fill:#6366f1,stroke:#4f46e5,color:#fff
+    style CHECK fill:#f59e0b,stroke:#d97706,color:#fff
+    style SWAP fill:#10b981,stroke:#059669,color:#fff
+    style MOVE fill:#10b981,stroke:#059669,color:#fff
+    style PRINT fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style E fill:#0ea5e9,stroke:#0284c7,color:#fff`,
         },
         {
           type: "code",

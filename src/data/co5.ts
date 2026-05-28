@@ -480,7 +480,24 @@ Product Type    : Electronics
           type: "text",
           content: `## Structure for Cricketer Information
 
-We define a \`struct Cricketer\` with the required fields, then accept data for multiple cricketers and display them.`,
+We define a \`struct Cricketer\` with the required fields, then accept data for multiple cricketers and display them in a formatted table.
+
+### Structure Fields
+
+| Field | Data Type | Description |
+|-------|-----------|-------------|
+| \`name\` | \`char[50]\` | Cricketer's full name |
+| \`total_matches\` | \`int\` | Total matches played |
+| \`total_runs\` | \`int\` | Total runs scored |
+| \`batting_avg\` | \`float\` | Batting average (runs per innings) |
+| \`total_wickets\` | \`int\` | Total wickets taken |
+
+### Key Points
+
+- An **array of structures** \`c[MAX]\` stores up to MAX cricketer records.
+- \`gets()\` is used to read the name (supports spaces).
+- \`getchar()\` is called after each \`scanf()\` to consume the leftover newline before the next \`gets()\`.
+- Output is displayed in a **formatted tabular** layout using \`printf\` with width alignment specifiers (\`%-20s\`, \`%8d\`, etc.).`,
         },
         {
           type: "code",
@@ -558,6 +575,29 @@ Rohit Sharma              243    10709    48.96        8
       marks: 8,
       blocks: [
         {
+          type: "text",
+          content: `## Cricket Club Player Data – Tabular Display
+
+We define a \`struct Player\` to store each player's details, accept records, and display them neatly in a formatted table using \`printf\` with width specifiers.
+
+### Structure Fields
+
+| Field | Data Type | Description |
+|-------|-----------|-------------|
+| \`name\` | \`char[50]\` | Player's full name |
+| \`age\` | \`int\` | Player's age |
+| \`matches\` | \`int\` | Number of matches played |
+| \`runs\` | \`int\` | Total runs scored |
+| \`average\` | \`float\` | Batting average |
+
+### Input/Output Approach
+
+- Use an **array of structures** \`p[MAX]\` for multiple players.
+- Use \`gets()\` for the name and \`scanf()\` for numeric fields.
+- Use \`getchar()\` to flush the newline left by \`scanf()\` before each \`gets()\`.
+- Use **%-format** (e.g., \`%-20s\`, \`%5d\`) for column-aligned tabular output.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Program – Cricket Club Player Data",
@@ -630,6 +670,31 @@ Hardik Pandya         30      113     3012    34.22
       source: "May 2023",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Employee Structure – Sorted by Employee Code
+
+We define a \`struct Employer\` with four fields, accept 5 employee records, and sort them in **ascending order of employee code** using Bubble Sort.
+
+### Structure Fields
+
+| Field | Data Type | Description |
+|-------|-----------|-------------|
+| \`code\` | \`int\` | Employee code (sort key) |
+| \`name\` | \`char[40]\` | Employee name |
+| \`salary\` | \`float\` | Monthly salary (Rs) |
+| \`designation\` | \`char[30]\` | Job designation |
+
+### Sorting Logic
+
+- Use **Bubble Sort** comparing \`emp[j].code\` with \`emp[j+1].code\`.
+- When a swap is needed, swap the **entire structure** using a temporary \`struct Employer\` variable — this keeps all fields of the record together.
+
+\`\`\`
+Example: codes = {105, 101, 108, 103, 112}
+After Sort: {101, 103, 105, 108, 112} (ascending)
+\`\`\``,
+        },
         {
           type: "code",
           language: "c",
@@ -804,6 +869,30 @@ Roll   Name                     Percentage
       source: "Aug 2023",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Hospital Patient Records – Search by Disease
+
+We define a \`struct Patient\` to store patient details and allow listing all patients matching a specific disease name.
+
+### Structure Fields
+
+| Field | Data Type | Description |
+|-------|-----------|-------------|
+| \`firstname\` | \`char[30]\` | Patient's first name |
+| \`surname\` | \`char[30]\` | Patient's surname |
+| \`dob\` | \`char[15]\` | Date of birth (DD/MM/YYYY) |
+| \`disease\` | \`char[40]\` | Name of the disease |
+
+### Search Logic
+
+1. Accept all patient records into an array of structures.
+2. Read the disease name to search from the user.
+3. Use \`strcmpi()\` for **case-insensitive** string comparison of disease names (so "diabetes" and "Diabetes" both match).
+4. Display all matching patients in a formatted tabular layout.
+
+> **Note:** \`strcmpi()\` is a Turbo C / Borland C function for case-insensitive comparison (equivalent to \`stricmp()\` or \`strcasecmp()\` in other compilers).`,
+        },
         {
           type: "code",
           language: "c",
