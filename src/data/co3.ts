@@ -74,6 +74,24 @@ void main() {
       marks: 6,
       blocks: [
         {
+          type: "text",
+          content: `## Sum of Digits Using a Function
+
+In this program, the logic for finding the sum of digits is placed inside a separate user-defined function. This makes the program modular and easy to understand.
+
+### Logic Used
+1. Pass the number to the function.
+2. Repeatedly take the last digit using \`num % 10\`.
+3. Add that digit to \`sum\`.
+4. Remove the last digit using \`num / 10\`.
+5. Continue until the number becomes \`0\`.
+
+### Why use a function?
+- The same logic can be reused later.
+- Main program becomes shorter and clearer.
+- It demonstrates function call, parameter passing, and returning a value.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Sum of Digits Using a Function",
@@ -508,6 +526,24 @@ Trace for factorial(5):
       marks: 6,
       blocks: [
         {
+          type: "text",
+          content: `## Program to Find \`nCr\`
+
+The combination formula is:
+\`nCr = n! / ((n-r)! * r!)\`
+
+This program uses a separate factorial function and then applies the formula for combination. It also checks basic invalid conditions such as negative inputs and \`r > n\`.
+
+### Steps
+1. Read \`n\` and \`r\`
+2. Find \`n!\`, \`(n-r)!\`, and \`r!\`
+3. Substitute them into the formula
+4. Print the value of \`nCr\`
+
+### Important Note
+When \`r = 0\` or \`r = n\`, the result is always \`1\`.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "nCr Combination Using Factorial Function",
@@ -791,6 +827,16 @@ After swap:  x = 20, y = 10
       source: "May 2024",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Factorial by Recursion
+
+The factorial of a number \`n\` is the product of all positive integers from \`1\` to \`n\`.
+
+\`n! = n × (n-1) × (n-2) × ... × 1\`
+
+In recursion, the function calls itself for a smaller value. The base case is \`0! = 1\` and \`1! = 1\`.`,
+        },
         {
           type: "code",
           language: "c",
@@ -1083,6 +1129,16 @@ Memory Visualization:
       source: "Aug 2025",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Printing Factorial Using Recursion
+
+This is another standard recursive factorial program. The function keeps reducing the number by \`1\` until it reaches the base case, and then the multiplication happens while returning from the recursive calls.
+
+### Recursive Rule
+- If \`n <= 1\`, return \`1\`
+- Otherwise, return \`n * factorial(n - 1)\``,
+        },
         {
           type: "code",
           language: "c",
@@ -1654,6 +1710,21 @@ Area of circle with radius 5.00 = 78.54
       marks: 6,
       blocks: [
         {
+          type: "text",
+          content: `## Sorting an Array Using a User-Defined Function
+
+This program sorts array elements in ascending order by using a separate function. The sorting method used is **bubble sort**, where adjacent elements are compared and swapped whenever they are in the wrong order.
+
+### How Bubble Sort Works
+1. Compare the first two elements
+2. Swap them if the left element is greater
+3. Continue this comparison for the whole array
+4. Repeat the passes until the array becomes sorted
+
+### Why this answer is important
+It shows both **user-defined functions** and **array processing** together, which is common in university exam questions.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Sort Array Using User-Defined Function (Bubble Sort)",
@@ -1730,6 +1801,19 @@ original array in main().
       source: "May 2024",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Calculate Factorial Using Recursion
+
+Recursion means a function solves a problem by calling itself with a smaller input. In factorial, each call multiplies the current number by the factorial of the previous number.
+
+### Formula
+- \`factorial(0) = 1\`
+- \`factorial(n) = n * factorial(n - 1)\` for \`n > 0\`
+
+So, for \`5!\`, the recursion expands as:
+\`5 * 4 * 3 * 2 * 1 = 120\``,
+        },
         {
           type: "code",
           language: "c",

@@ -287,6 +287,24 @@ void main() {
       marks: 6,
       blocks: [
         {
+          type: "text",
+          content: `## Calculator Using \`switch\`
+
+This program performs one arithmetic operation based on the operator entered by the user. Since the choice depends on a **single variable** (\`operator\`), the \`switch\` statement is a suitable control structure.
+
+### Working Principle
+1. Read the operator such as \`+\`, \`-\`, \`*\`, or \`/\`.
+2. Read two numbers.
+3. Use \`switch\` to match the operator with the correct case.
+4. Perform the required operation and display the result.
+5. For division, check that the second number is not zero.
+
+### Why \`switch\` is used here
+- It makes the program easy to read.
+- Each operation is handled in a separate \`case\`.
+- \`default\` handles invalid operator input.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Calculator using Switch Case",
@@ -409,6 +427,18 @@ PQRST
       source: "Dec 2022",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Sum of Series \`1² + 2² + ... + n²\`
+
+In this problem, each term is the square of a natural number. We use a \`for\` loop from \`1\` to \`n\`, calculate \`i * i\` in every iteration, and add it to the running total.
+
+### Logic
+- Initialize \`sum = 0\`
+- Repeat from \`i = 1\` to \`n\`
+- Add \`i * i\` to \`sum\`
+- Print the final value of \`sum\``,
+        },
         {
           type: "code",
           language: "c",
@@ -597,6 +627,22 @@ void main() {
       marks: 6,
       blocks: [
         {
+          type: "text",
+          content: `## Menu-Driven Calculator
+
+This program is a simple calculator controlled through a menu. The user first selects an operation number, then enters two values, and the program uses \`switch\` to execute the selected arithmetic operation.
+
+### Flow of the Program
+1. Display menu options for addition, subtraction, multiplication, and division.
+2. Read the user's choice.
+3. Read two numbers.
+4. Execute the matching \`case\` in the \`switch\` statement.
+5. Show an error message for division by zero or an invalid menu choice.
+
+### Main Benefit
+This approach is commonly used in exam programs because it clearly demonstrates **selection control** using \`switch-case\`.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Menu-Driven Calculator using Switch Case",
@@ -762,6 +808,19 @@ Example 2:
       source: "Dec 2022",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Addition of \`n\` Numbers Using \`for\` Loop
+
+The idea is to read numbers one by one and keep adding them into a variable named \`sum\`. The \`for\` loop controls how many times the input and addition steps are repeated.
+
+### Steps
+1. Read the total count \`n\`
+2. Initialize \`sum = 0\`
+3. Repeat \`n\` times using a \`for\` loop
+4. Read each number and add it to \`sum\`
+5. Display the final sum`,
+        },
         {
           type: "code",
           language: "c",
@@ -1086,6 +1145,15 @@ if (condition1) {
       marks: 4,
       blocks: [
         {
+          type: "text",
+          content: `## Arithmetic Operations Using \`switch\`
+
+This program reads two integers and a menu choice, then performs the selected operation using \`switch-case\`. It includes addition, subtraction, multiplication, division, and modulus.
+
+### Important Point
+For division and modulus, the second number must not be zero. Therefore, the program checks this condition before performing those operations.`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Arithmetic Operations using Switch Case",
@@ -1149,6 +1217,18 @@ void main() {
       marks: 4,
       blocks: [
         {
+          type: "text",
+          content: `## Even Numbers from 1 to \`n\`
+
+An even number is divisible by 2. Instead of checking every number, this program starts from \`2\` and increases the value by \`2\` in each iteration. This makes the logic simple and efficient.
+
+### Algorithm
+1. Read \`n\`
+2. Set \`i = 2\`
+3. While \`i <= n\`, print \`i\`
+4. Increase \`i\` by \`2\``,
+        },
+        {
           type: "code",
           language: "c",
           title: "Even Numbers from 1 to n using while Loop",
@@ -1191,6 +1271,18 @@ Example:
       source: "Jul 2022",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Positive, Negative, or Zero Check
+
+This program uses the \`if-else if-else\` ladder to classify a number into one of three categories:
+
+- If the number is greater than zero, it is **positive**
+- If the number is less than zero, it is **negative**
+- Otherwise, it is **zero**
+
+This is a standard example to show how multiple conditions can be tested one after another.`,
+        },
         {
           type: "code",
           language: "c",
@@ -1250,6 +1342,18 @@ void main() {
       marks: 4,
       blocks: [
         {
+          type: "text",
+          content: `## Display First \`n\` Natural Numbers and Their Sum
+
+Natural numbers start from \`1\`. In this program, the loop prints each number from \`1\` to \`n\` and simultaneously adds it to the variable \`sum\`.
+
+### Logic
+- Use a loop from \`1\` to \`n\`
+- Print each value of \`i\`
+- Add \`i\` to \`sum\`
+- After the loop, print the total sum`,
+        },
+        {
           type: "code",
           language: "c",
           title: "Display n Natural Numbers and Their Sum",
@@ -1294,6 +1398,18 @@ Example:
       source: "May/Jun 2023",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Weekday Name Using \`switch-case\`
+
+This program maps a weekday number to its corresponding name. For example, \`1\` stands for Monday and \`7\` stands for Sunday. Since only one value has to be matched against fixed constants, \`switch\` is the right choice.
+
+### Working
+1. Read a number from \`1\` to \`7\`
+2. Match it with the correct \`case\`
+3. Print the weekday name
+4. Use \`default\` for invalid input`,
+        },
         {
           type: "code",
           language: "c",
@@ -1641,6 +1757,23 @@ Example 4: Input: 1   -> Output: 1 is NOT a Prime number.
       source: "Aug 2025",
       marks: 4,
       blocks: [
+        {
+          type: "text",
+          content: `## Sum of Digits Using \`do-while\` Loop
+
+The program repeatedly extracts the last digit of the number using the modulus operator \`%\` and adds it to \`sum\`. Then it removes the last digit by integer division by \`10\`.
+
+### Why \`do-while\`?
+In a \`do-while\` loop, the body executes at least once. So even if the number is \`0\`, the loop still processes it correctly once before checking the condition.
+
+### Steps
+1. Read the number
+2. If it is negative, convert it to positive
+3. Extract digit using \`num % 10\`
+4. Add the digit to \`sum\`
+5. Remove the digit using \`num / 10\`
+6. Repeat until the number becomes \`0\``,
+        },
         {
           type: "code",
           language: "c",
