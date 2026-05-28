@@ -83,21 +83,21 @@ void main() {
 
 /*
 Output (addresses are illustrative):
-Base address of arr = 65516
+Base address of arr = 65500
 
 Using array notation:
-arr[0] = 10  (address: 65516)
-arr[1] = 20  (address: 65518)
-arr[2] = 30  (address: 65520)
-arr[3] = 40  (address: 65522)
-arr[4] = 50  (address: 65524)
+arr[0] = 10  (address: 65500)
+arr[1] = 20  (address: 65504)
+arr[2] = 30  (address: 65508)
+arr[3] = 40  (address: 65512)
+arr[4] = 50  (address: 65516)
 
 Using pointer notation:
-*(p + 0) = 10  (address: 65516)
-*(p + 1) = 20  (address: 65518)
-*(p + 2) = 30  (address: 65520)
-*(p + 3) = 40  (address: 65522)
-*(p + 4) = 50  (address: 65524)
+*(p + 0) = 10  (address: 65500)
+*(p + 1) = 20  (address: 65504)
+*(p + 2) = 30  (address: 65508)
+*(p + 3) = 40  (address: 65512)
+*(p + 4) = 50  (address: 65516)
 */`,
         },
         {
@@ -105,10 +105,10 @@ Using pointer notation:
           title: "Pointer traversal through array — arr[i] ≡ *(p+i)",
           content: `graph LR
     P["p = arr<br/>(base addr)"] --> A["arr[0]=10<br/>*(p+0)<br/>addr: 1000"]
-    A --> B["arr[1]=20<br/>*(p+1)<br/>addr: 1002"]
-    B --> C["arr[2]=30<br/>*(p+2)<br/>addr: 1004"]
-    C --> D["arr[3]=40<br/>*(p+3)<br/>addr: 1006"]
-    D --> E["arr[4]=50<br/>*(p+4)<br/>addr: 1008"]
+    A --> B["arr[1]=20<br/>*(p+1)<br/>addr: 1004"]
+    B --> C["arr[2]=30<br/>*(p+2)<br/>addr: 1008"]
+    C --> D["arr[3]=40<br/>*(p+3)<br/>addr: 1012"]
+    D --> E["arr[4]=50<br/>*(p+4)<br/>addr: 1016"]
     style P fill:#6366f1,stroke:#4f46e5,color:#fff
     style A fill:#8b5cf6,color:#fff
     style B fill:#06b6d4,color:#fff
