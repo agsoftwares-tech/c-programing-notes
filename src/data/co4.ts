@@ -309,7 +309,7 @@ void main() {
     printf("After strcat, s1 = %s\n", s1);
 
     result = strcmp("abc", "abc");
-    printf("Result of strcmp(\"abc\", \"abc\") = %d\n", result);
+    printf("Result of strcmp(abc, abc) = %d\n", result);
 
     printf("Lowercase of WORLD = %s\n", strlwr(s2));
 
