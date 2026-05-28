@@ -1739,4 +1739,26 @@ arr[i] == *(arr + i)     /* array indexing = pointer arithmetic */
 - By reference: \`temp = *a; *a = *b; *b = temp;\` ← works!
 
 **Exam tip:** Always show BOTH versions side by side and run both to demonstrate that only call-by-reference actually swaps. This earns full marks.`,
+
+  "co6-q10": `**Static = compile time (stack/data segment, fixed size, auto freed). Dynamic = runtime (heap, flexible size, manual free).**
+
+**The 3 critical differences examiners look for:**
+1. **When:** Static at compile time vs Dynamic at runtime
+2. **Where:** Static on stack/data segment vs Dynamic on heap
+3. **Freedom:** Static size is fixed vs Dynamic size is flexible
+
+**The heap vs stack memory picture (must draw this):**
+\`\`\`
+ Stack (static locals)  ↕  grows toward each other  ↕  Heap (dynamic/malloc)
+\`\`\`
+
+**Golden rule for dynamic memory:**
+\`\`\`c
+ptr = malloc(n * sizeof(int));   /* allocate */
+if (ptr == NULL) { /* error */ } /* check */
+/* ... use ptr ... */
+free(ptr); ptr = NULL;           /* free + set NULL */
+\`\`\`
+
+**Exam tip (4-mark question):** Draw the comparison table (9 rows) and show a small code example of both — static \`int arr[10];\` vs dynamic \`int *arr = malloc(10 * sizeof(int));\`. Mention the risk of memory leak if \`free()\` is forgotten.`,
 }
