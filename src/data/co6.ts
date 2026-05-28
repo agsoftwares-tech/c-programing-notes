@@ -1046,5 +1046,131 @@ After swap (by ref):   x = 20, y = 10  (SWAPPED)
         },
       ],
     },
+
+    // ────────────────────────────────────────────
+    // Q10 – Static vs Dynamic Memory Allocation
+    // ────────────────────────────────────────────
+    {
+      id: "co6-q10",
+      title:
+        "Differentiate between static and dynamic memory allocation in C.",
+      source: "Aug 2023 / May 2024",
+      marks: 4,
+      blocks: [
+        {
+          type: "text",
+          content: `## Static vs Dynamic Memory Allocation
+
+### Static Memory Allocation
+
+- Memory is allocated **at compile time**.
+- Size is **fixed** and cannot change during program execution.
+- Memory is allocated on the **stack** (for local variables) or in the **data segment** (for global/static variables).
+- No manual deallocation needed — memory is automatically released when the variable goes out of scope.
+
+\`\`\`c
+int arr[10];        /* size fixed at compile time */
+int x = 5;         /* statically allocated */
+\`\`\`
+
+---
+
+### Dynamic Memory Allocation
+
+- Memory is allocated **at runtime** as needed.
+- Size can be decided **during execution** based on user input or program logic.
+- Memory is allocated on the **heap**.
+- Programmer must **manually free** the memory using \`free()\` to avoid memory leaks.
+- Functions used: \`malloc()\`, \`calloc()\`, \`realloc()\`, \`free()\` from \`<stdlib.h>\`.
+
+\`\`\`c
+int *arr = (int *) malloc(n * sizeof(int));  /* size decided at runtime */
+free(arr);                                   /* must free manually */
+\`\`\`
+
+---
+
+### Comparison Table
+
+| Feature | Static Allocation | Dynamic Allocation |
+|---------|------------------|--------------------|
+| **When allocated** | Compile time | Runtime |
+| **Memory area** | Stack / Data segment | Heap |
+| **Size** | Fixed — must be known at compile time | Flexible — decided at runtime |
+| **Deallocation** | Automatic (when scope ends) | Manual — using \`free()\` |
+| **Functions used** | None (built-in) | \`malloc()\`, \`calloc()\`, \`realloc()\`, \`free()\` |
+| **Memory wastage** | Possible (over-allocate for safety) | Minimal (allocate exactly what's needed) |
+| **Risk of memory leak** | No | Yes (if \`free()\` is not called) |
+| **Speed** | Faster (no overhead) | Slightly slower (heap management) |
+| **Example** | \`int a[100];\` | \`int *a = malloc(n * sizeof(int));\` |
+
+---
+
+### Memory Layout Diagram
+
+\`\`\`
+ ┌──────────────┐  High address
+ │    Stack     │  ← static local variables, function frames
+ │  (grows ↓)   │
+ ├──────────────┤
+ │     ...      │
+ ├──────────────┤
+ │    Heap      │  ← dynamically allocated memory (malloc/calloc)
+ │  (grows ↑)   │
+ ├──────────────┤
+ │ Data Segment │  ← global and static variables
+ ├──────────────┤
+ │ Code Segment │  ← program instructions
+ └──────────────┘  Low address
+\`\`\`
+
+---
+
+### Example Comparing Both
+
+\`\`\`c
+#include <stdio.h>
+#include <stdlib.h>
+
+void staticExample() {
+    int arr[5] = {1, 2, 3, 4, 5};   /* static — size fixed */
+    int i;
+    printf("Static array: ");
+    for (i = 0; i < 5; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+    /* arr is automatically freed when function returns */
+}
+
+void dynamicExample(int n) {
+    int *arr = (int *) malloc(n * sizeof(int));  /* dynamic — size from n */
+    int i;
+    if (arr == NULL) {
+        printf("Memory allocation failed\\n");
+        return;
+    }
+    for (i = 0; i < n; i++)
+        arr[i] = (i + 1) * 10;
+    printf("Dynamic array: ");
+    for (i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\\n");
+    free(arr);   /* must free manually */
+}
+
+void main() {
+    staticExample();
+    dynamicExample(5);
+}
+
+/*
+Output:
+Static array:  1  2  3  4  5
+Dynamic array: 10 20 30 40 50
+*/
+\`\`\``,
+        },
+      ],
+    },
   ],
 }
